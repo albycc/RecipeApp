@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Pressable, FlatList } from 'react-native';
 import { Link } from 'expo-router';
 import { RecipeProvider, useRecipeProvider } from '../state/RecipeContext';
+import HeaderMain from '../components/templates/HeaderMain';
 
 
 export default function App() {
@@ -10,13 +11,14 @@ export default function App() {
     console.log("state: ", state)
 
     return (
-        <RecipeProvider>
+        <HeaderMain>
             <View style={styles.container}>
                 <Text>Open up App.tsx</Text>
-                <Link href="/create-recipe">Create</Link>
+                <Link href="/CreateRecipe">Create</Link>
                 <FlatList data={state.recipes} renderItem={({ item }) => <Text>{item.name}</Text>} keyExtractor={recipe => recipe.id} />
             </View>
-        </RecipeProvider>
+
+        </HeaderMain>
     );
 }
 

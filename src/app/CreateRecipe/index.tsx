@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Pressable, TextInput } from "react-native";
-import { useRecipeProvider, RecipeActionType } from "../state/RecipeContext";
-import { IRecipe } from "../models/IRecipe";
+import { useRecipeProvider, RecipeActionType } from "../../state/RecipeContext";
+import { IRecipe } from "../../models/IRecipe";
 import { useState } from "react";
 import { router } from "expo-router";
 
