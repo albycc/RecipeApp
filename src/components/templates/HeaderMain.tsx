@@ -2,6 +2,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 import { Slot } from "expo-router"
 import { View } from "react-native"
 import { StyleSheet } from "react-native"
+import { Link } from "expo-router"
 
 interface IProps {
     children?: JSX.Element
@@ -13,6 +14,8 @@ function HeaderMain({ children }: IProps) {
             <View style={styles.baseLayout}>
 
                 <View style={styles.header}>
+                    <Link href="/">RECIPES</Link>
+                    <Link href="/Collection" >COLLECTIONS</Link>
 
                 </View>
                 <View style={styles.main}>
@@ -29,14 +32,18 @@ function HeaderMain({ children }: IProps) {
 const styles = StyleSheet.create({
     baseLayout: {
         flex: 1,
-        backgroundColor: "green"
     },
     header: {
         flex: 1,
-        height: 100
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        height: 100,
+        backgroundColor: "green"
     },
     main: {
         flex: 10,
+        backgroundColor: "white"
     }
 
 })
