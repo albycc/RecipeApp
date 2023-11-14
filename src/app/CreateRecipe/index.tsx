@@ -1,9 +1,14 @@
-import { View, Text, StyleSheet, Pressable, TextInput } from "react-native";
+import { View, Text, StyleSheet, Pressable, TextInput, ScrollView } from "react-native";
 import { useRecipeProvider, RecipeActionType } from "../../state/RecipeContext";
 import { IRecipe } from "../../models/IRecipe";
 import { useState } from "react";
 import { router } from "expo-router";
 import Button from "../../components/atoms/Button";
+import { ColourThemes } from "../../css/colours";
+import InputText from "../../components/atoms/InputText";
+import Tabs from "../../components/molecules/Tabs/Tabs";
+import Tab from "../../components/molecules/Tabs/Tab";
+import IngredientsPanel from "../../components/organisms/Pages/CreateRecipe/IngredientsPanel";
 
 function CreateRecipePage() {
     const { dispatch } = useRecipeProvider()
@@ -17,10 +22,34 @@ function CreateRecipePage() {
     }
 
     return <View style={styles.content}>
-        <Text>Create Recipe</Text>
-        <TextInput style={styles.textField} onChangeText={(v) => setRecipe({ ...recipe, name: v })} value={recipe.name} />
-        <Button onPress={createRecipe} label="Create" />
-        <Button onPress={() => router.push("/")} label="Back" />
+        <View style={styles.recipeCover}></View>
+        <View style={styles.recipePageMain}>
+
+            <View style={{ flex: 1, height: 30, flexDirection: "row", }}>
+                <InputText onChange={(v) => setRecipe({ ...recipe, name: v })} />
+            </View>
+            <View style={{ flex: 1, flexDirection: "row", height: 40 }}>
+                <Text>Time: 50</Text>
+            </View>
+            <View style={{ flex: 1, height: 50, flexDirection: "row" }}>
+                <Text>H</Text>
+                <Text>T</Text>
+                <Text>L</Text>
+                <Text>B</Text>
+            </View>
+            <View style={{ flex: 5, }} >
+                <Tabs >
+                    <Tab tabName="Ingredients"><IngredientsPanel /></Tab>
+                    <Tab tabName="Instructions"><View><Text>2</Text></View></Tab>
+
+                </Tabs>
+            </View>
+            <View style={{ flex: 1, }}>
+                <Button onPress={createRecipe} label="Create" />
+                <Button onPress={() => router.push("/")} label="Back" />
+            </View>
+
+        </View>
 
     </View>
 
@@ -31,7 +60,16 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "white"
     },
+    recipeCover: {
+        flex: 1,
+        backgroundColor: ColourThemes.lightGrey
+    },
+    recipePageMain: {
+        flex: 3,
+        overflow: "scroll"
+    },
     textField: {
+        flex: 1,
         borderColor: "grey",
         borderWidth: 1
     },

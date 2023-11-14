@@ -1,13 +1,30 @@
 import { Text, View, Pressable, StyleSheet } from "react-native";
+import { ColourThemes } from "../../css/colours";
 
 interface IProps {
-    label?: string
+    label?: string;
+    diameter?: number;
+    colour?: string;
+    onPress?: () => void
 }
 
-function CircleButton({ label }: IProps) {
+function CircleButton({ label, diameter, colour, onPress }: IProps) {
+
+    const onPressHandler = () => {
+        if (onPress)
+            onPress()
+    }
+
     return (
-        <Pressable style={styles.roundbutton}>
-            <Text style={[styles.text, { transform: [{ translateX: -150 }] }]}>{label}</Text>
+        <Pressable
+            style={[styles.roundbutton, {
+                width: diameter ?? 100,
+                height: diameter ?? 100,
+                backgroundColor: colour ?? ColourThemes.lightGrey
+            }]}
+            onPress={onPressHandler}
+        >
+            <Text style={[styles.text]}>{label}</Text>
         </Pressable>
     )
 
@@ -15,16 +32,9 @@ function CircleButton({ label }: IProps) {
 
 const styles = StyleSheet.create({
     roundbutton: {
-        position: "relative",
-        backgroundColor: "#F3F3F3",
-        width: 200,
-        height: 200,
         borderRadius: 100
     },
     text: {
-        left: "50%",
-        top: "50%",
-        marginRight: "-50%",
         textAlign: "center",
         fontSize: 24
     }

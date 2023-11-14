@@ -10,7 +10,7 @@ function Button({ onPress, label }: IProps) {
 
     return (
         <Pressable onPress={onPress ? () => onPress() : () => { }} style={styles.button} >
-            <Text>{label ?? "ll"}</Text>
+            <Text>{label}</Text>
         </Pressable>
     )
 
