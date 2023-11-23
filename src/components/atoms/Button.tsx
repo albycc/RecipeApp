@@ -1,16 +1,25 @@
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet, Text, StyleProp, TextStyle, } from "react-native";
+import { ColourThemes } from "../../css/colours";
 
 interface IProps {
     onPress?: () => void;
-    label?: string
+    label?: string;
+    disabled?: boolean;
+    style?: StyleProp<TextStyle>;
+    size?: number;
 }
 
-function Button({ onPress, label }: IProps) {
+function Button(props: IProps) {
 
+    console.log("Button disabled: ", props.disabled)
 
     return (
-        <Pressable onPress={onPress ? () => onPress() : () => { }} style={styles.button} >
-            <Text>{label}</Text>
+        <Pressable
+            onPress={props.onPress}
+            style={[styles.button, props.style, props.disabled ? styles.disabled : styles.enabled]}
+            disabled={props.disabled}
+        >
+            <Text style={{ fontSize: props.size }}>{props.label}</Text>
         </Pressable>
     )
 
@@ -19,10 +28,16 @@ function Button({ onPress, label }: IProps) {
 const styles = StyleSheet.create({
     button: {
         minWidth: 10,
-        backgroundColor: "#73FFAB",
         padding: 3,
         borderRadius: 6,
-        flexGrow: 0
+        flexGrow: 0,
+    },
+    enabled: {
+        backgroundColor: ColourThemes.cyan
+    },
+    disabled: {
+        backgroundColor: ColourThemes.lightGrey
+
     }
 })
 

@@ -1,7 +1,11 @@
 export interface IRecipe {
   id: string;
   name: string;
+  time: number;
   imageCover: string;
+  nrPortions: number;
+  instructions: string[];
+  ingredients: IRecipeIngredient[];
 }
 
 export interface IIngredient {
@@ -10,9 +14,13 @@ export interface IIngredient {
   name: string;
 }
 
-export interface IIngredientAmount {
-  ingredientID: string;
+export interface IRecipeIngredient {
   name: string;
   amount: number;
   measureType: string;
+}
+
+export interface IInstruction {
+  description: string;
+  done: boolean;
 }
