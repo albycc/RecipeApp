@@ -11,8 +11,6 @@ interface IProps {
 
 function Button(props: IProps) {
 
-    console.log("Button disabled: ", props.disabled)
-
     return (
         <Pressable
             onPress={props.onPress}

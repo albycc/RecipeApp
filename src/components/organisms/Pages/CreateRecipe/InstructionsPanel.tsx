@@ -6,7 +6,7 @@ import { ColourThemes } from "../../../../css/colours";
 
 interface IProps {
     instructionsList: string[]
-    setInstructionsList: (list: string[]) => void
+    setInstructionsList?: (list: string[]) => void
 }
 
 export type InstructionToEdit = {
@@ -17,6 +17,7 @@ export type InstructionToEdit = {
 function InstructionsPanel(props: IProps) {
     const [instructionsList, setInstructionsList] = useState<string[]>([])
     const [editInstruction, setEditInstruction] = useState<InstructionToEdit | null>(null)
+
 
     useEffect(() => {
         setInstructionsList(props.instructionsList)
@@ -61,7 +62,8 @@ function InstructionsPanel(props: IProps) {
 
             setInstructionsList(instructionsList)
             setEditInstruction(null)
-            props.setInstructionsList(instructionsList)
+            if (props.setInstructionsList)
+                props.setInstructionsList(instructionsList)
         }
     }
 
@@ -71,15 +73,16 @@ function InstructionsPanel(props: IProps) {
 
     return (
         <View style={{ height: "100%" }}>
-            <Text>Instructions</Text>
             <FlatList
                 data={instructionsList}
                 renderItem={({ item, index }) => InstructionItem(item, index)}
                 scrollEnabled={false}
             />
-            <Pressable onPress={newInstructionButtonHandler}>
-                <Card><Text>New instructions</Text></Card>
-            </Pressable>
+            {props.setInstructionsList && (
+                <Pressable onPress={newInstructionButtonHandler}>
+                    <Card><Text>New instructions</Text></Card>
+                </Pressable>
+            )}
         </View>
     )
 }

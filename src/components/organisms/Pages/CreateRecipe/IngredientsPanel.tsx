@@ -9,8 +9,8 @@ import Button from "../../../../components/atoms/Button";
 
 interface IProps {
     ingredientsList: IRecipeIngredient[];
-    onListChanged: (list: IRecipeIngredient[]) => void
-    onPortionsChanged: (portions: number) => void
+    onListChanged?: (list: IRecipeIngredient[]) => void
+    onPortionsChanged?: (portions: number) => void
 }
 
 function IngredientsPanel(props: IProps) {
@@ -24,11 +24,13 @@ function IngredientsPanel(props: IProps) {
     }, [])
 
     useEffect(() => {
-        props.onListChanged(ingredientsList)
+        if (props.onListChanged)
+            props.onListChanged(ingredientsList)
     }, [ingredientsList])
 
     useEffect(() => {
-        props.onPortionsChanged(countPortions)
+        if (props.onPortionsChanged)
+            props.onPortionsChanged(countPortions)
     }, [countPortions])
 
     const newIngredientButtonHandler = () => {
@@ -130,24 +132,30 @@ function IngredientsPanel(props: IProps) {
                     renderItem={({ item }) => EditIngredientItem(item)}
                     scrollEnabled={false}
                 />
-                {newIngredientMode ?
-                    <View>
-                        {newIngredient && EditIngredientItem(newIngredient)}
-                        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                {props.onListChanged && (
+                    <>
+                        {newIngredientMode ?
+                            <View>
+                                {newIngredient && EditIngredientItem(newIngredient)}
+                                <View style={{ flexDirection: "row", justifyContent: "center" }}>
 
-                            <Button label="Cancel" onPress={() => setNewIngredientMode(false)} />
-                            <Button label="Create" onPress={() => createIngredientButtonHandler()} />
-                        </View>
-                    </View>
-                    :
-                    <Card margin={10}>
-                        <View style={{ flexDirection: "row" }}>
-                            <Pressable onPress={() => newIngredientButtonHandler()}>
-                                <Text style={{ color: "#9c9c9c", textAlign: "center" }}>New ingredient...</Text>
-                            </Pressable>
-                        </View>
-                    </Card>
-                }
+                                    <Button label="Cancel" onPress={() => setNewIngredientMode(false)} />
+                                    <Button label="Create" onPress={() => createIngredientButtonHandler()} />
+                                </View>
+                            </View>
+                            :
+                            <Card margin={10}>
+                                <View style={{ flexDirection: "row" }}>
+                                    <Pressable onPress={() => newIngredientButtonHandler()}>
+                                        <Text style={{ color: "#9c9c9c", textAlign: "center" }}>New ingredient...</Text>
+                                    </Pressable>
+                                </View>
+                            </Card>
+                        }
+
+                    </>
+                )}
+
             </View>
         </View>
     )

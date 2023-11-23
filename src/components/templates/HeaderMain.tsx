@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native"
 import { Link } from "expo-router"
 
 interface IProps {
-    children?: JSX.Element
+    children?: JSX.Element | JSX.Element[]
 }
 
 function HeaderMain({ children }: IProps) {
