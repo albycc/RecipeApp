@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Image } from "react-native";
 import Icon from "../atoms/Icon";
 import { Link } from "expo-router";
 
@@ -13,10 +13,12 @@ function RecipeCover({ id, imageCover, title }: IProps) {
 
     return (
         <View style={styles.coverLayout}>
-            <Link href={"/recipe/[" + id + "]"} style={styles.link}>
-                <Icon src={imageCover} height={280} />
-                <Text style={styles.title}>{title}</Text>
+            <Link href={"/recipe/" + id} style={styles.link}>
+                <View style={styles.coverLayout}>
+                    <Icon src={imageCover} height={280} />
+                    <Text style={styles.title}>{title}</Text>
 
+                </View>
             </Link>
         </View>
     )
@@ -28,12 +30,10 @@ const styles = StyleSheet.create({
         height: 300,
         width: 350,
         marginBottom: 20,
-        backgroundColor: "green"
     },
     link: {
         flex: 1,
         height: "100%",
-        backgroundColor: "yellow"
 
     },
     coverImage: {

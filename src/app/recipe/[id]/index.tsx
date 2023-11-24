@@ -9,6 +9,7 @@ import Tab from "../../../components/molecules/Tabs/Tab";
 import IngredientsPanel from "../../../components/organisms/Pages/CreateRecipe/IngredientsPanel";
 import InstructionsPanel from "../../../components/organisms/Pages/CreateRecipe/InstructionsPanel";
 import Button from "../../../components/atoms/Button";
+import Icon from "../../../components/atoms/Icon";
 
 
 function Recipe() {
@@ -19,8 +20,7 @@ function Recipe() {
         console.log("Recipe id: ", id)
         if (id) {
             const fetchData = async () => {
-                const recipeId: string = (id as string).substring(1, id.length - 1)
-                const recipe = await RecipeStore.getRecipe(recipeId)
+                const recipe = await RecipeStore.getRecipe(id as string)
                 if (recipe) {
                     setRecipe(recipe)
                 }
@@ -29,15 +29,22 @@ function Recipe() {
         }
     }, [id])
 
-
     return (
         <View style={styles.content}>
-            <View style={styles.recipeCover}></View>
-            {recipe && (
+            {recipe && <>
+                <View style={styles.recipeCover}>
+                    <Icon src={recipe?.imageCover} />
+                </View>
                 <View style={styles.recipePageMain}>
                     <ScrollView>
-                        <View style={{ flex: 1, height: 40, flexDirection: "row", marginTop: 10 }}>
+                        <View style={{ flex: 1, height: 40, flexDirection: "row", justifyContent: "space-between", marginTop: 10, }}>
                             <Text style={{ fontSize: 30 }}>{recipe.name}</Text>
+                            <Button
+                                onPress={() => router.push("/recipe/" + id + "/edit")}
+                                label="Edit"
+                                style={{ marginHorizontal: 10 }}
+                                size={20}
+                            />
                         </View>
                         <View style={{ flex: 1, flexDirection: "row", height: 40 }}>
                             <Text style={{ fontSize: 15 }}>{recipe.time}</Text>
@@ -47,6 +54,8 @@ function Recipe() {
                                 <Tab tabName="Ingredients">
                                     <IngredientsPanel
                                         ingredientsList={recipe.ingredients}
+                                        portions={recipe.nrPortions}
+                                        isPortionsAltering={true}
                                     />
                                 </Tab>
                                 <Tab tabName="Instructions">
@@ -58,7 +67,7 @@ function Recipe() {
                         </View>
                     </ScrollView>
                 </View>
-            )}
+            </>}
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
                 <Button
                     onPress={() => router.push("/")}
@@ -66,12 +75,7 @@ function Recipe() {
                     style={{ backgroundColor: ColourThemes.lightCyan, marginHorizontal: 10 }}
                     size={20}
                 />
-                <Button
-                    onPress={() => router.push("/recipe/" + id + "/edit")}
-                    label="Edit"
-                    style={{ marginHorizontal: 10 }}
-                    size={20}
-                />
+
             </View>
         </View>
     )

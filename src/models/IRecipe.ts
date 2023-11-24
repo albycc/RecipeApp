@@ -8,6 +8,11 @@ export interface IRecipe {
   ingredients: IRecipeIngredient[];
 }
 
+export type IMeasure = {
+  label: string;
+  value: string;
+};
+
 export interface IIngredient {
   id: string;
   cover?: string;

@@ -2,25 +2,39 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, FlatList, Pressable, NativeSyntheticEvent, TextInputFocusEventData } from "react-native";
 import CircleButton from "../../../../components/atoms/CircleButton";
 import { ColourThemes } from "../../../../css/colours";
-import { IIngredient, IRecipeIngredient } from "../../../../models/IRecipe";
+import { IIngredient, IRecipeIngredient, IMeasure } from "../../../../models/IRecipe";
 import Card from "../../../../components/atoms/Card";
 import InputText from "../../../atoms/InputText";
 import Button from "../../../../components/atoms/Button";
+import Dropdown from "../../../../components/atoms/Dropdown";
+
 
 interface IProps {
     ingredientsList: IRecipeIngredient[];
     onListChanged?: (list: IRecipeIngredient[]) => void
-    onPortionsChanged?: (portions: number) => void
+    portions?: number;
+    onPortionsChanged?: (portions: number) => void;
+    isPortionsAltering?: boolean;
 }
 
 function IngredientsPanel(props: IProps) {
-    const [countPortions, setCountPortions] = useState<number>(4)
+    const [countPortions, setCountPortions] = useState<number>(0)
     const [ingredientsList, setIngredientsList] = useState<IRecipeIngredient[]>([])
     const [newIngredientMode, setNewIngredientMode] = useState<boolean>(false)
     const [newIngredient, setNewIngredient] = useState<IRecipeIngredient | null>(null)
+    const [measuresList, setMeasuresList] = useState([
+        { label: "g", value: "gram" },
+        { label: "dl", value: "dl" },
+        { label: "msk", value: "msk" },
+        { label: "tsk", value: "tsk" },
+        { label: "krm", value: "krm" },
+    ])
+    // const [portionsScale, setPortionsScale] = useState<number>(1)
 
     useEffect(() => {
         setIngredientsList(props.ingredientsList)
+        if (props.portions)
+            setCountPortions(props.portions)
     }, [])
 
     useEffect(() => {
@@ -29,6 +43,12 @@ function IngredientsPanel(props: IProps) {
     }, [ingredientsList])
 
     useEffect(() => {
+        if (props.isPortionsAltering && props.portions) {
+            // setPortionsScale(countPortions / props.portions)
+            const recipePortions = props.portions
+            const list = props.ingredientsList.map(ingredient => { return { ...ingredient, amount: (countPortions / recipePortions) * ingredient.amount } })
+            setIngredientsList(list)
+        }
         if (props.onPortionsChanged)
             props.onPortionsChanged(countPortions)
     }, [countPortions])
@@ -65,13 +85,10 @@ function IngredientsPanel(props: IProps) {
                                 onChange={(s) => setNewIngredient({ ...newIngredient, amount: +s })}
                                 noBorder
                             />
-                            <InputText
-                                style={{ width: 40, marginHorizontal: 10 }}
-                                value={newIngredient.measureType}
-                                placeHolder="Type"
-                                onChange={(s) => setNewIngredient({ ...newIngredient, measureType: s })}
-                                noBorder
-                            />
+                            <Dropdown
+                                options={measuresList}
+                                valueSelected={(option) => setNewIngredient({ ...newIngredient, measureType: option.value })} />
+
                             <InputText
                                 style={{ flex: 1 }}
                                 value={newIngredient.name}
@@ -103,7 +120,6 @@ function IngredientsPanel(props: IProps) {
     }
 
 
-    console.log(countPortions)
     return (
         <View style={{ height: '100%' }}>
             <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "flex-start", marginTop: 10 }}>
