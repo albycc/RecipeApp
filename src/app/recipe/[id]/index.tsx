@@ -8,7 +8,7 @@ import Tabs from "../../../components/molecules/Tabs/Tabs";
 import Tab from "../../../components/molecules/Tabs/Tab";
 import IngredientsPanel from "../../../components/organisms/Pages/CreateRecipe/IngredientsPanel";
 import InstructionsPanel from "../../../components/organisms/Pages/CreateRecipe/InstructionsPanel";
-import Button from "../../../components/atoms/Button";
+import Button from "../../../components/atoms/Input/Button";
 import Icon from "../../../components/atoms/Icon";
 
 

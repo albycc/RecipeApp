@@ -2,9 +2,9 @@ import { View, Text, StyleSheet, Pressable, TextInput, ScrollView } from "react-
 import { IRecipe } from "../../../models/IRecipe";
 import { useState, useEffect } from "react";
 import { router, useLocalSearchParams } from "expo-router";
-import Button from "../../../components/atoms/Button";
+import Button from "../../../components/atoms/Input/Button";
 import { ColourThemes } from "../../../css/colours";
-import InputText from "../../../components/atoms/InputText";
+import InputText from "../../../components/atoms/Input/InputText";
 import Tabs from "../../../components/molecules/Tabs/Tabs";
 import Tab from "../../../components/molecules/Tabs/Tab";
 import IngredientsPanel from "../../../components/organisms/Pages/CreateRecipe/IngredientsPanel";
@@ -82,12 +82,14 @@ function CreateRecipePage() {
                                             ingredientsList={recipe.ingredients}
                                             onPortionsChanged={(portions) => setRecipe({ ...recipe, nrPortions: portions })}
                                             portions={recipe.nrPortions}
+                                            editMode
                                         />
                                     </Tab>
                                     <Tab tabName="Instructions">
                                         <InstructionsPanel
                                             instructionsList={recipe.instructions}
                                             setInstructionsList={(list) => setRecipe({ ...recipe, instructions: list })}
+                                            editMode
                                         />
                                     </Tab>
                                 </Tabs>

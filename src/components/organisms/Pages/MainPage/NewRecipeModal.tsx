@@ -1,7 +1,7 @@
 import { View, Text } from "react-native"
 import ModalWindow from "../../../../components/atoms/modal/ModalWindow";
-import InputText from "../../../../components/atoms/InputText";
-import Button from "../../../../components/atoms/Button";
+import InputText from "../../../atoms/Input/InputText";
+import Button from "../../../atoms/Input/Button";
 import react, { useState } from "react"
 import uuid from 'react-native-uuid';
 import { IRecipe } from "../../../../models/IRecipe";

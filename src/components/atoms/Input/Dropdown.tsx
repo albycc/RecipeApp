@@ -1,10 +1,11 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import react, { useState } from "react"
-import { IMeasure } from "../../models/IRecipe";
+import react, { useState, useEffect } from "react"
+import { IMeasure } from "../../../models/IRecipe";
 
 interface IProps {
     options?: IOption[]
     valueSelected?: (option: IOption) => void
+    value?: string;
 }
 
 export type IOption = {
@@ -15,6 +16,15 @@ export type IOption = {
 function Dropdown(props: IProps) {
     const [openDropdownMenu, setOpenDropdownMenu] = useState<boolean>(false)
     const [chosenValue, setChosenValue] = useState<IOption | null>(null)
+
+    useEffect(() => {
+        if (props.value && props.options) {
+            const optionFound = props.options.find(option => option.value === props.value)
+            if (optionFound)
+                setChosenValue(optionFound)
+        }
+
+    }, [props.value])
 
     const DropdownItem = (option: IMeasure) => {
         return (
@@ -70,7 +80,8 @@ const styles = StyleSheet.create({
         padding: 5,
         minHeight: 50,
         width: "100%",
-        backgroundColor: "white"
+        backgroundColor: "white",
+        zIndex: 900
 
     },
     optionItem: {

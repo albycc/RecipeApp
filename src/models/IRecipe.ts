@@ -4,7 +4,7 @@ export interface IRecipe {
   time: number;
   imageCover: string;
   nrPortions: number;
-  instructions: string[];
+  instructions: IRecipeInstruction[];
   ingredients: IRecipeIngredient[];
 }
 
@@ -20,12 +20,14 @@ export interface IIngredient {
 }
 
 export interface IRecipeIngredient {
+  id: string;
   name: string;
   amount: number;
   measureType: string;
 }
 
-export interface IInstruction {
+export interface IRecipeInstruction {
+  id: string;
   description: string;
   done: boolean;
 }

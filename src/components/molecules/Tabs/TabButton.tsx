@@ -1,5 +1,5 @@
 import { View, Pressable, StyleSheet, Text } from "react-native"
-import { ColourThemes } from "../../css/colours"
+import { ColourThemes } from "../../../css/colours"
 
 interface IProps {
     title: string;
