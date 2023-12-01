@@ -26,7 +26,6 @@ export const RecipeStore = {
     const data: IRecipe[] = await AsyncStorage.getItem(recipeKey).then(
       (json) => {
         if (json !== null) {
-          console.log("json: ", JSON.parse(json));
           return JSON.parse(json);
         }
       }
@@ -36,5 +35,35 @@ export const RecipeStore = {
     // } catch (error) {
     //   return error;
     // }
+  },
+  getRecipe: async (id: string): Promise<IRecipe | null> => {
+    const data: IRecipe[] = await AsyncStorage.getItem(recipeKey).then(
+      (json) => {
+        if (json !== null) {
+          return JSON.parse(json);
+        }
+      }
+    );
+    const recipe = data.find((recipe) => recipe.id === id);
+    return recipe ? recipe : null;
+  },
+  removeItems: async () => {
+    await AsyncStorage.removeItem(recipeKey);
+  },
+  putRecipe: async (recipe: IRecipe) => {
+    const recipeList: IRecipe[] = await AsyncStorage.getItem(recipeKey).then(
+      (json) => {
+        if (json !== null) {
+          return JSON.parse(json);
+        }
+      }
+    );
+    const recipeIndex = recipeList.findIndex((r) => r.id === recipe.id);
+
+    if (recipeIndex !== -1) {
+      recipeList[recipeIndex] = recipe;
+    }
+    await AsyncStorage.setItem(recipeKey, JSON.stringify(recipeList));
+    return "success";
   },
 };

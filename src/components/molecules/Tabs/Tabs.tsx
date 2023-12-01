@@ -1,6 +1,6 @@
 import { View, StyleSheet, Text } from "react-native";
 import { useState, useEffect } from "react"
-import TabButton from "../../atoms/TabButton";
+import TabButton from "./TabButton";
 import React, { Children, PropsWithChildren } from "react"
 import { ITabProps } from "./Tab";
 

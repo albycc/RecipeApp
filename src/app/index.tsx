@@ -1,25 +1,22 @@
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Modal } from 'react-native';
 import { Link } from 'expo-router';
 import { useRecipeProvider } from '../state/RecipeContext';
 import HeaderMain from '../components/templates/HeaderMain';
 import { IRecipe } from '../models/IRecipe';
 import RecipeCover from '../components/molecules/RecipeCover';
-import CircleButton from '../components/atoms/CircleButton';
 import CircleLink from '../components/atoms/Links/CircleLink';
 import { RecipeStore } from '../store/store';
 import { useEffect, useState } from 'react';
-
-// const recipeData: IRecipe[] = [
-//     { id: "3453-3g34-g54g-3453", name: "Chicken", nrPortions: 4, imageCover: "chicken.png", ingredients: [], instructions: [] },
-//     { id: "43f4-34g4-f43w-34hd", name: "Chicken 2", nrPortions: 4, imageCover: "chicken.png", ingredients: [], instructions: [] },
-//     { id: "2df4-hh45-b54f-35h5", name: "Chicken 3", nrPortions: 4, imageCover: "chicken.png", ingredients: [], instructions: [] },
-// ]
+import NewRecipeModal from '../components/organisms/Pages/MainPage/NewRecipeModal';
+import CircleButton from '../components/atoms/Input/CircleButton';
+import { ScrollView } from 'react-native-gesture-handler';
+import Button from '../components/atoms/Input/Button';
+import { router } from 'expo-router';
+import { generateNumberId } from '../utils/idMathGen';
 
 export default function App() {
-    const { state } = useRecipeProvider()
     const [recipes, setRecipes] = useState<IRecipe[]>([])
-
-    console.log("state: ", state)
+    const [showNewRecipeModal, setShowNewRecipeModal] = useState<boolean>(false)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,16 +29,36 @@ export default function App() {
         fetchData()
     }, [])
 
+    const deleteAllButtonHandler = () => {
+        const deleteAll = async () => {
+            await RecipeStore.removeItems()
+            router.push("/")
+        }
+
+        deleteAll()
+    }
+
+    console.log("showNewRecipeModal: ", showNewRecipeModal)
+
     return (
         <HeaderMain>
             <View style={styles.container}>
-                <Text>Open up ggsgsdg</Text>
-                <CircleLink href='/CreateRecipe' label='NEW RECIPE' />
-                <FlatList
+                {showNewRecipeModal && <NewRecipeModal visible={showNewRecipeModal} modalClosed={(visible) => setShowNewRecipeModal(visible)} />}
+                <ScrollView>
+                    <View style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}>
+                        <CircleButton onPress={() => setShowNewRecipeModal(true)} label='NEW RECIPE' />
+
+                    </View>
+
+                    {recipes.map((item => <RecipeCover key={item.id} id={item.id} title={item.name} imageCover={item.imageCover} />))}
+                    {/* <FlatList
                     data={recipes}
-                    renderItem={({ item }) => <RecipeCover title={item.name} imageCover={item.imageCover} />}
+                    renderItem={({ item }) => <RecipeCover id={item.id} title={item.name} imageCover={item.imageCover} />}
                     keyExtractor={item => item.id}
-                />
+                /> */}
+                    <Button label="Delete all" onPress={deleteAllButtonHandler} />
+
+                </ScrollView>
             </View>
 
         </HeaderMain>

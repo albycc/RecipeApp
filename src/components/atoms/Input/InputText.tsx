@@ -6,6 +6,7 @@ interface IProps {
     noBorder?: true;
     onFocus?: () => void;
     onBlur?: () => void;
+    onReturn?: (value: string) => void
     style?: StyleProp<TextStyle>;
     type?: KeyboardTypeOptions;
     maxLength?: number;
@@ -37,6 +38,7 @@ function InputText(props: IProps) {
             multiline={props.textArea}
             numberOfLines={props.numberOfLines}
             defaultValue={props.defaultText}
+
         />
     )
 

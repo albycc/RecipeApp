@@ -1,5 +1,7 @@
-import { Pressable, StyleSheet, Text, StyleProp, TextStyle, } from "react-native";
-import { ColourThemes } from "../../css/colours";
+import { Pressable, StyleSheet, Text, StyleProp, TextStyle, Image } from "react-native";
+import { ColourThemes } from "../../../css/colours";
+import Icon from "../Icon";
+// import iconDone from "../../../assets/icons/done.png"
 
 interface IProps {
     onPress?: () => void;
@@ -7,11 +9,28 @@ interface IProps {
     disabled?: boolean;
     style?: StyleProp<TextStyle>;
     size?: number;
+    icon?: string
 }
+
+const iconButtons = [
+    {
+        name: "done",
+        src: require("../../../assets/icons/done.png")
+    },
+    {
+        name: "trashbin",
+        src: require("../../../assets/icons/trashbin.png")
+    },
+]
+
+
 
 function Button(props: IProps) {
 
-    console.log("Button disabled: ", props.disabled)
+    const fetchIcon = (name: string) => {
+        return iconButtons.find(icon => icon.name === name)?.src
+
+    }
 
     return (
         <Pressable
@@ -20,6 +39,7 @@ function Button(props: IProps) {
             disabled={props.disabled}
         >
             <Text style={{ fontSize: props.size }}>{props.label}</Text>
+            {props.icon && <Image source={fetchIcon(props.icon)} style={{ height: 25, width: 25 }} />}
         </Pressable>
     )
 
