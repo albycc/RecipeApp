@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text, Image } from "react-native";
-import Icon from "../atoms/Icon";
+import Icon from "../../atoms/Icon";
 import { Link } from "expo-router";
 
 interface IProps {

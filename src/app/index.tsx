@@ -3,9 +3,9 @@ import { Link } from 'expo-router';
 import { useRecipeProvider } from '../state/RecipeContext';
 import HeaderMain from '../components/templates/HeaderMain';
 import { IRecipe } from '../models/IRecipe';
-import RecipeCover from '../components/molecules/RecipeCover';
+import RecipeCover from '../components/molecules/Covers/RecipeCover';
 import CircleLink from '../components/atoms/Links/CircleLink';
-import { RecipeStore } from '../store/store';
+import { RecipeStore } from '../store/recipeStore';
 import { useEffect, useState } from 'react';
 import NewRecipeModal from '../components/organisms/Pages/MainPage/NewRecipeModal';
 import CircleButton from '../components/atoms/Input/CircleButton';
@@ -20,7 +20,7 @@ export default function App() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const recipeData: IRecipe[] = await RecipeStore.getRecipes()
+            const recipeData: IRecipe[] = await RecipeStore.getAllRecipes()
             console.log("recipeData: ", recipeData)
             if (recipeData) {
                 setRecipes(recipeData)

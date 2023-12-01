@@ -2,8 +2,8 @@ import { View, StyleSheet, ScrollView, Text } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState, useEffect } from "react";
 import { ColourThemes } from "../../../css/colours";
-import { IRecipe } from "../../../models/IRecipe";
-import { RecipeStore } from "../../../store/store";
+import { IRecipe, IRecipeIngredient, IRecipeInstruction } from "../../../models/IRecipe";
+import { RecipeStore } from "../../../store/recipeStore";
 import Tabs from "../../../components/molecules/Tabs/Tabs";
 import Tab from "../../../components/molecules/Tabs/Tab";
 import IngredientsPanel from "../../../components/organisms/Pages/CreateRecipe/IngredientsPanel";
@@ -17,7 +17,6 @@ function Recipe() {
     const [recipe, setRecipe] = useState<IRecipe | null>(null)
 
     useEffect(() => {
-        console.log("Recipe id: ", id)
         if (id) {
             const fetchData = async () => {
                 const recipe = await RecipeStore.getRecipe(id as string)
@@ -70,7 +69,7 @@ function Recipe() {
             </>}
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
                 <Button
-                    onPress={() => router.push("/")}
+                    onPress={() => router.back()}
                     label="Back"
                     style={{ backgroundColor: ColourThemes.lightCyan, marginHorizontal: 10 }}
                     size={20}
