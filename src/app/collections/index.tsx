@@ -20,15 +20,14 @@ function CollectionsPage() {
             console.log("fetch collections")
             CollectionStore.getAllCollections().then(async (collections) => {
                 console.log("fetch collections recipes")
-                await Promise.all([...collections.map(async collection => {
-                    console.log("fetch collections recipes cover")
-                    let recipes: IRecipe[] = await Promise.all([...collection.recipes.map(async recipe => {
-                        return await RecipeStore.getRecipe(recipe)
-                    })]) as IRecipe[]
-                    console.log("recipes: ", recipes)
-                    collection.covers = recipes.map(recipe => recipe.imageCover).slice(0, 4)
 
-                    console.log("collection with covers: ", collection)
+                await Promise.all([...collections.map(async collection => {
+                    let recipeData = await Promise.all([...collection.recipes.map(async recipe => { return await RecipeStore.getRecipe(recipe) }
+                    )])
+                    const collectionRecipes: IRecipe[] = recipeData.filter(((recipe): recipe is IRecipe => !!recipe))
+                    console.log("recipes: ", collectionRecipes)
+                    collection.covers = collectionRecipes.map(recipe => recipe.imageCover).slice(0, 4)
+
                     return collection
 
                 })]).then(collections => {
@@ -75,6 +74,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
 });
 
 export default CollectionsPage

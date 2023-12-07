@@ -28,32 +28,30 @@ function AddRecipeToCollectionModal(props: IProps) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const recipes = await RecipeStore.getAllRecipes()
+            const allRecipes = await RecipeStore.getAllRecipes()
 
-            const selectRecipes: SelectableRecipe[] = recipes.map(recipe => {
+            const selectRecipes: SelectableRecipe[] = allRecipes.map(recipe => {
 
-                const isAdded = props.collection.recipes.some(recipe => recipes.some(r => r.id === recipe))
-
-                return {
+                const recipeAlreadyAdded = props.collection.recipes.find(recipeId => recipeId === recipe.id) ? true : false
+                const selectableRecipe: SelectableRecipe = {
                     recipe,
-                    selected: isAdded
+                    selected: recipeAlreadyAdded
                 }
+                return selectableRecipe
             })
 
             setRecipes(selectRecipes)
         }
-
         fetchData()
 
     }, [])
 
     const addRecipeAsSelected = (id: string) => {
-        console.log("add recipe: ", id)
-        const index = recipes.findIndex(recipe => recipe.recipe.id === id)
+        const clonedArray = [...recipes]
+        const index = clonedArray.findIndex(recipe => recipe.recipe.id === id)
         if (index !== -1) {
-            recipes[index].selected = !recipes[index].selected;
-            console.log("addRecipeAsSelected recipes: ", recipes)
-            setRecipes(recipes)
+            clonedArray[index].selected = !clonedArray[index].selected;
+            setRecipes(clonedArray)
         }
     }
 
@@ -72,8 +70,6 @@ function AddRecipeToCollectionModal(props: IProps) {
 
         const selectedRecipes = recipes.filter(recipe => recipe.selected).map(recipe => recipe.recipe.id)
 
-        console.log("selectedRecipes: ", selectedRecipes)
-
         await CollectionStore.setRecipes(props.collection.id, selectedRecipes).then(response => {
             if (response === "success") {
                 props.modalClosed(false)
@@ -81,6 +77,7 @@ function AddRecipeToCollectionModal(props: IProps) {
         })
 
     }
+
     return (
         <ModalWindow visible={props.visible} modalClosed={props.modalClosed}>
             <View style={{ height: "80%", width: 250 }}>

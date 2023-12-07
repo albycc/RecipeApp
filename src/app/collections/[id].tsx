@@ -52,22 +52,30 @@ function CollectionPage() {
                     modalClosed={(visible) => setShowAddRecipeModal(visible)}
                     collection={collection}
                 />}
-                <Button label="<" onPress={() => router.back()} />
+                <Button label="<" onPress={() => router.back()} size={20} />
                 {collection && <Text style={{ fontSize: 30 }}>{collection.title}</Text>}
-                <ScrollView>
+                <ScrollView style={{ width: "90%" }}>
                     <FlatList
                         data={recipes}
                         renderItem={({ item }) => (
-                            <RecipeCover
-                                id={item.id}
-                                imageCover={item.imageCover}
-                                title={item.name}
-                            />
+                            <View style={{ width: "50%", backgroundColor: "orange" }}>
+                                <RecipeCover
+                                    id={item.id}
+                                    imageCover={item.imageCover}
+                                    title={item.name}
+                                    scale={0.45}
+                                />
+
+                            </View>
                         )}
                         keyExtractor={({ id }) => id}
                         scrollEnabled={false}
+                        numColumns={2}
+                        contentContainerStyle={styles.listContainer}
                     />
-                    <CircleButton onPress={() => setShowAddRecipeModal(true)} label="Add recipe" />
+                    <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                        <CircleButton onPress={() => setShowAddRecipeModal(true)} label="Add recipe" />
+                    </View>
                 </ScrollView>
             </View>}
         </HeaderMain>
@@ -80,6 +88,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    listContainer: {
+        flex: 1,
+        marginTop: 20,
+        backgroundColor: "blue"
     },
 });
 
