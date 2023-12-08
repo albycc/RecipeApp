@@ -9,7 +9,7 @@ import Tabs from "../../../components/molecules/Tabs/Tabs";
 import Tab from "../../../components/molecules/Tabs/Tab";
 import IngredientsPanel from "../../../components/organisms/Pages/CreateRecipe/IngredientsPanel";
 import InstructionsPanel from "../../../components/organisms/Pages/CreateRecipe/InstructionsPanel";
-import { RecipeStore } from "../../../store/store";
+import { RecipeStore } from "../../../store/recipeStore";
 import Icon from "../../../components/atoms/Icon";
 
 function CreateRecipePage() {

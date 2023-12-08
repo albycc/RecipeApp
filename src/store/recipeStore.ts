@@ -22,7 +22,7 @@ export const RecipeStore = {
       return error;
     }
   },
-  getRecipes: async (): Promise<IRecipe[]> => {
+  getAllRecipes: async (): Promise<IRecipe[]> => {
     const data: IRecipe[] = await AsyncStorage.getItem(recipeKey).then(
       (json) => {
         if (json !== null) {

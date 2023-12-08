@@ -6,7 +6,7 @@ function BaseLayout() {
     return (
         <RecipeProvider>
 
-            <SafeAreaProvider style={{ flex: 1, backgroundColor: "darkblue" }}>
+            <SafeAreaProvider style={{ flex: 1, }}>
                 <SafeAreaView style={{ flex: 1, }}>
                     <Slot />
 

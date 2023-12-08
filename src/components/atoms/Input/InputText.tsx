@@ -38,6 +38,7 @@ function InputText(props: IProps) {
             multiline={props.textArea}
             numberOfLines={props.numberOfLines}
             defaultValue={props.defaultText}
+            blurOnSubmit={props.textArea}
 
         />
     )
@@ -46,7 +47,6 @@ function InputText(props: IProps) {
 
 const styles = StyleSheet.create({
     style: {
-        height: 20,
         width: '90%',
     },
     border: {

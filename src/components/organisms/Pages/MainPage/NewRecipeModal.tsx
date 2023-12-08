@@ -5,7 +5,7 @@ import Button from "../../../atoms/Input/Button";
 import react, { useState } from "react"
 import uuid from 'react-native-uuid';
 import { IRecipe } from "../../../../models/IRecipe";
-import { RecipeStore } from "../../../../store/store";
+import { RecipeStore } from "../../../../store/recipeStore";
 import { router } from "expo-router";
 
 interface IProps {
@@ -26,8 +26,6 @@ function NewRecipeModal(props: IProps) {
             ingredients: [],
             instructions: []
         }
-
-        console.log("store recipe ", newRecipe)
 
         RecipeStore.setRecipe(newRecipe).then(data => {
             if (data === "success") {
