@@ -13,19 +13,16 @@ function HeaderMain({ children }: IProps) {
     const path = usePathname()
 
     return (
-        <SafeAreaProvider style={{ flex: 1, backgroundColor: "darkblue" }}>
-            <SafeAreaView style={{ flex: 1, paddingTop: 10 }}>
-                <View style={styles.baseLayout}>
-                    <View style={styles.header}>
-                        <Link href="/" style={[styles.link, path === "/" && styles.linkActive]}>RECIPES</Link>
-                        <Link href="/collections" style={[styles.link, path.includes("/collections") && styles.linkActive]}>COLLECTIONS</Link>
-                    </View>
-                    <View style={styles.main}>
-                        {children}
-                    </View>
-                </View>
-            </SafeAreaView>
-        </SafeAreaProvider>
+        <View style={styles.baseLayout}>
+            <View style={styles.header}>
+                <Link href="/" style={[styles.link, path === "/" && styles.linkActive]}>RECIPES</Link>
+                <Link href="/collections" style={[styles.link, path.includes("/collections") && styles.linkActive]}>COLLECTIONS</Link>
+            </View>
+            <View style={styles.main}>
+                {children}
+            </View>
+        </View>
+
     )
 }
 

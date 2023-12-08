@@ -4,24 +4,23 @@ import { useEffect, useState } from "react";
 interface IProps {
     children?: React.ReactNode | React.ReactNode[];
     visible?: boolean;
-    modalClosed?: (visible: boolean) => void
+    onClose?: () => void
 }
 
 function ModalWindow(props: IProps) {
-    const [visible, setVisible] = useState<boolean>(false)
 
-    useEffect(() => { if (props.visible) setVisible(props.visible) }, [props.visible])
+    useEffect(() => { if (props.onClose) props.onClose() }, [props.visible])
 
     return (
         <Modal
             animationType="slide"
             transparent={true}
-            visible={visible}
+            visible={props.visible}
         >
             <View style={styles.centered}>
                 <View style={styles.modalView}>
                     <View style={styles.modalHeader}>
-                        <Pressable onPress={() => { if (props.modalClosed) props.modalClosed(false) }}>
+                        <Pressable onPress={() => { if (props.onClose) props.onClose() }}>
                             <Text style={{ fontSize: 20 }}>X</Text>
                         </Pressable>
                     </View>

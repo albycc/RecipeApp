@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, FlatList } from "react-native";
+import { View, Text, StyleSheet, ScrollView, FlatList, Dimensions } from "react-native";
 import { Link } from "expo-router";
 import HeaderMain from "../../components/templates/HeaderMain";
 import CircleButton from "../../components/atoms/Input/CircleButton";
@@ -11,15 +11,15 @@ import { RecipeStore } from "../../store/recipeStore";
 import { IRecipe } from "../../models/IRecipe";
 import CollectionCover from "../../components/molecules/Covers/CollectionCover";
 
+const { width, height } = Dimensions.get('window')
+
 function CollectionsPage() {
     const [showCollectionModal, setShowCollectionModal] = useState<boolean>(false);
     const [collections, setCollections] = useState<ICollection[]>([])
 
     useEffect(() => {
         const fetchData = () => {
-            console.log("fetch collections")
             CollectionStore.getAllCollections().then(async (collections) => {
-                console.log("fetch collections recipes")
 
                 await Promise.all([...collections.map(async collection => {
                     let recipeData = await Promise.all([...collection.recipes.map(async recipe => { return await RecipeStore.getRecipe(recipe) }
@@ -40,26 +40,28 @@ function CollectionsPage() {
         fetchData()
     }, [])
 
+    console.log("showCollectionModal: ", showCollectionModal)
+
     return (
         <HeaderMain>
             <View style={styles.container}>
-                {showCollectionModal && <NewCollectionModal
+                <NewCollectionModal
                     visible={showCollectionModal}
-                    modalClosed={(visible) => setShowCollectionModal(visible)}
-                />}
-
-                <ScrollView style={{ marginTop: 10 }} contentContainerStyle={{ alignItems: "center" }}>
-                    <CircleButton label="New Collection" onPress={() => setShowCollectionModal(true)} />
+                    onClose={() => setShowCollectionModal(false)}
+                />
+                <ScrollView style={{ marginTop: 10 }} contentContainerStyle={{ alignItems: "center", width }}>
+                    <CircleButton label="New Collection" onPress={() => setShowCollectionModal(true)} diameter={120} />
                     <FlatList
                         data={collections}
-                        renderItem={({ item }) => <CollectionCover
-                            id={item.id}
-                            title={item.title}
-                            recipeCovers={item.covers ?? []} />}
+                        renderItem={({ item }) => (
+                            <CollectionCover
+                                id={item.id}
+                                title={item.title}
+                                recipeCovers={item.covers ?? []} />
+                        )}
                         keyExtractor={item => item.id}
                         scrollEnabled={false}
                         style={{ marginTop: 20 }}
-
                     />
                 </ScrollView>
             </View>

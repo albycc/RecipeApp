@@ -10,7 +10,7 @@ import { router } from "expo-router";
 
 interface IProps {
     visible?: boolean;
-    modalClosed: (visible: boolean) => void
+    onClose: () => void
 }
 
 function NewCollectionModal(props: IProps) {
@@ -28,17 +28,15 @@ function NewCollectionModal(props: IProps) {
         CollectionStore.setCollection(collection).then(response => {
             if (response) {
                 router.push("/collections/" + collection.id)
-
             }
         })
-
     }
     return (
-        <ModalWindow visible={props.visible} modalClosed={props.modalClosed}>
+        <ModalWindow visible={props.visible} onClose={() => props.onClose}>
             <Text>New Collection</Text>
             <InputText onChange={(s) => setCollectionName(s)} />
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                <Button label="Cancel" onPress={() => props.modalClosed(false)} />
+                <Button label="Cancel" onPress={() => props.onClose()} />
                 <Button label="Create" onPress={() => createNewCollection()} disabled={collectionName === ""} />
             </View>
 

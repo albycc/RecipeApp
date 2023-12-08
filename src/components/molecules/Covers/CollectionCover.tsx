@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, Image } from "react-native"
+import { View, StyleSheet, Text, Image, } from "react-native"
 import { ColourThemes } from "../../../css/colours"
 import { Link } from "expo-router";
 import Icon from "../../../components/atoms/Icon";
@@ -11,13 +11,17 @@ type IProps = {
 
 function CollectionCover(props: IProps) {
     return (
-        <View>
+        <View style={styles.coverContainer}>
             <Link href={"/collections/" + props.id}>
                 <View style={{ alignItems: "center" }}>
                     <View style={styles.circle}>
-                        {props.recipeCovers.map(recipe => <Icon src={recipe} width={150} height={150} />)}
+                        {props.recipeCovers.map((recipe, index) => (
+                            <View key={index} style={{ borderWidth: 1, borderColor: "white" }}>
+                                <Icon src={recipe} width={150} height={150} />
+                            </View>
+                        ))}
                     </View>
-                    <Text>{props.title}</Text>
+                    <Text style={styles.coverTitle}>{props.title}</Text>
                 </View>
             </Link>
         </View>
@@ -25,17 +29,24 @@ function CollectionCover(props: IProps) {
 }
 
 const styles = StyleSheet.create({
+    coverContainer: {
+        flex: 1,
+        marginBottom: 20,
+    },
     circle: {
         flex: 1,
+        flexDirection: "row",
+        flexWrap: "wrap",
         borderRadius: 200,
-        width: 300,
-        height: 300,
+        width: 304,
+        height: 304,
         backgroundColor: ColourThemes.lightGrey,
         overflow: "hidden"
     },
-    layoutCover: {
-
+    coverTitle: {
+        fontSize: 25
     }
+
 })
 
 export default CollectionCover

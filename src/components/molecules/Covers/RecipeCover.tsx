@@ -34,18 +34,15 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         marginHorizontal: 5,
         width: "100%",
-        backgroundColor: "pink"
     },
     link: {
         flex: 1,
         height: "100%",
         width: "100%",
-        backgroundColor: "green",
     },
     imageContainer: {
         width: '100%',
         height: 250,
-        backgroundColor: "grey",
         overflow: "hidden"
     },
     coverImage: {

@@ -67,4 +67,23 @@ export const CollectionStore = {
       return "success";
     } else return "fail";
   },
+  editCollection: async (collectionToEdit: ICollection): Promise<string> => {
+    const collections: ICollection[] = await AsyncStorage.getItem(
+      collectionKey
+    ).then((json) => {
+      if (json !== null) {
+        return JSON.parse(json);
+      } else {
+        return [];
+      }
+    });
+    const index = collections.findIndex(
+      (collection) => collection.id === collectionToEdit.id
+    );
+    if (index !== -1) {
+      collections[index] = collectionToEdit;
+      await AsyncStorage.setItem(collectionKey, JSON.stringify(collections));
+      return "success";
+    } else return "fail";
+  },
 };

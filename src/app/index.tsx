@@ -39,7 +39,7 @@ export default function App() {
         <HeaderMain>
             <View style={styles.container}>
                 {showNewRecipeModal && <NewRecipeModal visible={showNewRecipeModal} modalClosed={(visible) => setShowNewRecipeModal(visible)} />}
-                <ScrollView contentContainerStyle={{ justifyContent: "center", width, backgroundColor: "blue" }} >
+                <ScrollView contentContainerStyle={{ justifyContent: "center", width, }} >
                     <View style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}>
                         <CircleButton onPress={() => setShowNewRecipeModal(true)} label='NEW RECIPE' />
                     </View>
@@ -56,9 +56,8 @@ export default function App() {
                         )}
                         keyExtractor={item => item.id}
                         scrollEnabled={false}
-                        contentContainerStyle={{ width: width * 0.9, backgroundColor: "blue" }}
+                        contentContainerStyle={{ width: width * 0.9, }}
                     />
-                    <Button label="Delete all" onPress={deleteAllButtonHandler} />
                 </ScrollView>
             </View>
         </HeaderMain>

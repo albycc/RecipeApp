@@ -14,7 +14,7 @@ import { ColourThemes } from "../../../../css/colours";
 
 interface IProps {
     visible?: boolean;
-    modalClosed: (visible: boolean) => void;
+    onClose: () => void;
     collection: ICollection
 }
 
@@ -72,14 +72,13 @@ function AddRecipeToCollectionModal(props: IProps) {
 
         await CollectionStore.setRecipes(props.collection.id, selectedRecipes).then(response => {
             if (response === "success") {
-                props.modalClosed(false)
+                props.onClose()
             }
         })
-
     }
 
     return (
-        <ModalWindow visible={props.visible} modalClosed={props.modalClosed}>
+        <ModalWindow visible={props.visible} onClose={() => props.onClose}>
             <View style={{ height: "80%", width: 250 }}>
                 <Text>Add recipes to {props.collection.title}</Text>
                 <InputText />
@@ -88,7 +87,7 @@ function AddRecipeToCollectionModal(props: IProps) {
                     renderItem={({ item }) => renderItem(item)}
                 />
                 <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                    <Button label="Cancel" onPress={() => props.modalClosed(false)} />
+                    <Button label="Cancel" onPress={() => props.onClose()} />
                     <Button label="Done" onPress={() => addToCollection()} />
                 </View>
             </View>
