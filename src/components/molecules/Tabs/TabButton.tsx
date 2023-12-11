@@ -5,20 +5,28 @@ interface IProps {
     title: string;
     active: boolean;
     onPress: (s: string) => void
+    isFirstChild: boolean;
+    isLastChild: boolean
 }
 
-function TabButton({ title, active, onPress }: IProps) {
+function TabButton(props: IProps) {
 
 
     const onPressHandler = () => {
-        onPress(title)
+        props.onPress(props.title)
     }
     return (
         <Pressable
-            style={[styles.button, { backgroundColor: active ? ColourThemes.lightCyan : ColourThemes.cyan }]}
+            style={[styles.button, {
+                backgroundColor: props.active ? ColourThemes.lightCyan : ColourThemes.cyan,
+                borderTopLeftRadius: props.isFirstChild ? 10 : 0,
+                borderBottomLeftRadius: props.isFirstChild ? 10 : 0,
+                borderBottomRightRadius: props.isLastChild ? 10 : 0,
+                borderTopRightRadius: props.isLastChild ? 10 : 0,
+            }]}
             onPress={onPressHandler}
         >
-            <Text style={styles.label}>{title}</Text>
+            <Text style={styles.label}>{props.title}</Text>
         </Pressable>
     )
 }

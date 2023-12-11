@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100"
+   height="100"
+   viewBox="0 0 26.458333 26.458333"
+   version="1.1"
+   id="svg1920"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1922"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false" />
+  <defs
+     id="defs1917" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="fill:#73ffab;fill-opacity:1;stroke-width:3.23724;stop-color:#000000"
+       id="path2093"
+       cx="13.229167"
+       cy="13.229167"
+       r="13.034506" />
+    <path
+       id="path2093-1"
+       style="fill:#baffd6;fill-opacity:1;stroke-width:3.23724;stop-color:#000000"
+       d="M 13.229167,0.19482015 V 13.229167 L 25.64753,9.2681681 A 13.034506,13.034506 0 0 0 13.229167,0.19482015 Z" />
+  </g>
+</svg>

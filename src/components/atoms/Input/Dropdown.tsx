@@ -36,7 +36,6 @@ function Dropdown(props: IProps) {
             }}>
                 <View>
                     <Text key={option.value} style={{ fontSize: 20 }}>{option.label}</Text>
-
                 </View>
             </Pressable>
         )
@@ -46,12 +45,14 @@ function Dropdown(props: IProps) {
         <View style={styles.dropdownLayout}>
             <View style={styles.box}>
                 <Pressable onPress={() => { console.log("open"), setOpenDropdownMenu(!openDropdownMenu) }}>
-                    <Text style={{ fontSize: 20 }}>{chosenValue ? chosenValue.label : "Select"}</Text>
+                    <Text style={{ fontSize: 15 }}>{chosenValue ? chosenValue.label : "Select"}</Text>
                 </Pressable>
             </View>
-            {openDropdownMenu && <View style={styles.optionsMenu}>
-                {props.options && props.options.map(option => DropdownItem(option))}
-            </View>}
+            {openDropdownMenu && (
+                <View style={styles.optionsMenu}>
+                    {props.options && props.options.map(option => DropdownItem(option))}
+                </View>
+            )}
         </View>
     )
 
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     },
     optionsMenu: {
         position: "absolute",
-        top: 36,
+        top: 30,
         left: 0,
         borderWidth: 1,
         borderColor: "black",
@@ -81,7 +82,6 @@ const styles = StyleSheet.create({
         minHeight: 50,
         width: "100%",
         backgroundColor: "white",
-        zIndex: 900
 
     },
     optionItem: {

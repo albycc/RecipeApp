@@ -8,7 +8,10 @@ import InputText from "../../../atoms/Input/InputText";
 import Button from "../../../atoms/Input/Button";
 import Dropdown from "../../../atoms/Input/Dropdown";
 import { generateNumberId } from "../../../../utils/idMathGen";
-
+import IconDone from "../../../../assets/icons/done.svg";
+import IconDelete from "../../../../assets/icons/trashbin.svg";
+import IconCancel from "../../../../assets/icons/cancel.svg"
+import NumericInput from "../../../../components/atoms/Input/NumericInput";
 
 interface IProps {
     ingredientsList: IRecipeIngredient[];
@@ -24,11 +27,11 @@ function IngredientsPanel(props: IProps) {
     const [ingredientsList, setIngredientsList] = useState<IRecipeIngredient[]>([])
     const [editIngredient, setEditIngredient] = useState<IRecipeIngredient | null>(null)
     const [measuresList, setMeasuresList] = useState([
-        { label: "g", value: "gram" },
-        { label: "dl", value: "dl" },
-        { label: "msk", value: "msk" },
-        { label: "tsk", value: "tsk" },
-        { label: "krm", value: "krm" },
+        { label: "gram", value: "g" },
+        { label: "deciliter", value: "dl" },
+        { label: "matsked", value: "msk" },
+        { label: "tesked", value: "tsk" },
+        { label: "kryddmått", value: "krm" },
     ])
     // const [portionsScale, setPortionsScale] = useState<number>(1)
 
@@ -76,33 +79,28 @@ function IngredientsPanel(props: IProps) {
         console.log("editIngredient: ", editIngredient)
         console.log("ingredientItem: ", ingredientItem)
         return (
-            <Card margin={10}>
-                <View style={{ flex: 1, flexDirection: "row" }}>
+            <Card margin={10} key={ingredientItem.id}>
+                <View style={{ flex: 1, flexDirection: "row", }}>
                     {props.editMode ? (
                         <>
                             {editIngredient && editIngredient.id === ingredientItem.id ?
                                 <>
-                                    <InputText
-                                        style={{ width: 30 }}
-                                        value={editIngredient.amount.toString()}
-                                        onChange={(s) => setEditIngredient({ ...ingredientItem, amount: +s })}
-                                        noBorder
-                                    />
+                                    <NumericInput minLimit={0} value={editIngredient.amount} onChange={(amount) => setEditIngredient({ ...editIngredient, amount })} />
                                     <Dropdown
                                         options={measuresList}
-                                        valueSelected={(option) => setEditIngredient({ ...ingredientItem, measureType: option.value })}
+                                        valueSelected={(option) => setEditIngredient({ ...editIngredient, measureType: option.value })}
                                         value={editIngredient.measureType}
                                     />
-
                                     <InputText
-                                        style={{ flex: 1 }}
+                                        style={{ flex: 1, marginLeft: 5 }}
                                         value={editIngredient.name}
                                         placeHolder="Enter ingredient"
-                                        onChange={(s) => setEditIngredient({ ...ingredientItem, name: s })}
+                                        onChange={(s) => setEditIngredient({ ...editIngredient, name: s })}
                                         noBorder
                                     />
-                                    <Button icon="done" onPress={ingredientEditDoneHandler} />
-                                    <Button icon="trashbin" onPress={deleteIngredientHandler} />
+                                    <IconDone onPress={ingredientEditDoneHandler} width={25} height={25} />
+                                    <IconCancel onPress={() => setEditIngredient(null)} width={25} height={25} />
+                                    <IconDelete onPress={deleteIngredientHandler} width={25} height={25} />
 
 
                                 </>
@@ -140,6 +138,8 @@ function IngredientsPanel(props: IProps) {
             console.log("index: ", index)
             if (index !== -1) {
 
+                console.log("editIngredient: ", editIngredient)
+
                 ingredientsList[index] = editIngredient
 
                 setIngredientsList(ingredientsList)
@@ -159,7 +159,7 @@ function IngredientsPanel(props: IProps) {
 
     return (
         <View style={{ height: '100%' }}>
-            <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "flex-start", marginTop: 10 }}>
+            <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 10 }}>
                 <CircleButton
                     label="-"
                     diameter={50}
@@ -180,19 +180,23 @@ function IngredientsPanel(props: IProps) {
                 />
             </View>
             <View>
-                <FlatList
+                {/* <FlatList
                     data={ingredientsList}
-                    renderItem={({ item, index }) => EditIngredientItem(item)}
+                    renderItem={({ item }) => EditIngredientItem(item)}
                     scrollEnabled={false}
-                />
+                /> */}
+                {ingredientsList.map((ingredient) => EditIngredientItem(ingredient))}
                 {props.onListChanged && (
-                    <Card margin={10}>
-                        <View style={{ flexDirection: "row" }}>
-                            <Pressable onPress={() => newIngredientButtonHandler()}>
-                                <Text style={{ color: "#9c9c9c", textAlign: "center" }}>New ingredient...</Text>
-                            </Pressable>
-                        </View>
-                    </Card>
+                    <View>
+
+                        <Card margin={10}>
+                            <View style={{ flexDirection: "row" }}>
+                                <Pressable onPress={() => newIngredientButtonHandler()}>
+                                    <Text style={{ color: "#9c9c9c", textAlign: "center" }}>New ingredient...</Text>
+                                </Pressable>
+                            </View>
+                        </Card>
+                    </View>
                 )}
             </View>
         </View>
@@ -204,7 +208,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginLeft: 20,
         marginRight: 20,
-        color: "black"
+        color: "black",
     }
 })
 

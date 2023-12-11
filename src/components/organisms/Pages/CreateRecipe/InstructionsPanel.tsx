@@ -5,6 +5,7 @@ import InputText from "../../../atoms/Input/InputText";
 import { ColourThemes } from "../../../../css/colours";
 import { IRecipeInstruction } from "../../../../models/IRecipe";
 import { generateNumberId } from "../../../../utils/idMathGen";
+import OListItem from "../../../../components/atoms/Lists/Ordered/OListItem";
 
 interface IProps {
     instructionsList: IRecipeInstruction[]
@@ -23,41 +24,38 @@ function InstructionsPanel(props: IProps) {
 
     const InstructionItem = (instruction: IRecipeInstruction, index: number) => {
         return (
-            <View style={{ flex: 1, flexDirection: "row", marginVertical: 10 }}>
-                <View style={styles.circleNrItem}>
-                    <Text>{index + 1}</Text>
-                </View>
-                <Card>
-                    {props.editMode ? (
-                        <>
-                            {editInstruction?.id === instruction.id ? (
-                                <InputText
-                                    noBorder
-                                    textArea
-                                    defaultText={instruction.description}
-                                    numberOfLines={10}
-                                    onFocus={() => setEditInstruction({ ...instruction })}
-                                    onBlur={() => editInstructionText()}
-                                    onChange={(s) => {
-                                        if (editInstruction) setEditInstruction({ ...editInstruction, description: s })
-                                    }
-                                    }
-                                />
-                            ) : (
-                                <Pressable onPress={() => setEditInstruction(instruction)} style={{ width: "100%" }}>
-                                    <Text style={{ color: "grey" }}>{instruction.description}</Text>
-                                </Pressable>
-                            )
-                            }
-                        </>
-                    )
-                        :
-                        (
-                            <Text >{instruction.description}</Text>
+            <OListItem nr={index}>
+                {props.editMode ? (
+                    <>
+                        {editInstruction?.id === instruction.id ? (
+                            <InputText
+                                noBorder
+                                textArea
+                                defaultText={instruction.description}
+                                numberOfLines={10}
+                                onFocus={() => setEditInstruction({ ...instruction })}
+                                onBlur={() => editInstructionText()}
+                                onChange={(s) => {
+                                    if (editInstruction) setEditInstruction({ ...editInstruction, description: s })
+                                }
+                                }
+                            />
+                        ) : (
+                            <Pressable onPress={() => setEditInstruction(instruction)} style={{ width: "100%" }}>
+                                <Text >{instruction.description}</Text>
+                            </Pressable>
                         )
-                    }
-                </Card>
-            </View>
+                        }
+                    </>
+                )
+                    :
+                    (
+                        <Text >{instruction.description}</Text>
+                    )
+                }
+
+            </OListItem>
+
         )
     }
 
@@ -95,16 +93,5 @@ function InstructionsPanel(props: IProps) {
     )
 }
 
-const styles = StyleSheet.create({
-    circleNrItem: {
-        borderRadius: 100,
-        width: 50,
-        height: 50,
-        backgroundColor: ColourThemes.cyan,
-        color: "grey",
-        marginHorizontal: 5,
-        margin: "auto"
-    }
-})
 
 export default InstructionsPanel;

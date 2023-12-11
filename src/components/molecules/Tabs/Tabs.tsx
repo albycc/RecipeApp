@@ -29,13 +29,21 @@ function Tabs({ children }: IProps) {
 
     return (
         <View >
-
             <View style={styles.buttonGrp}>
-                {Children.map(children, ({ props }, index) => <TabButton key={`tab-button.${index}`} title={props.tabName} active={props.tabName === activeTab} onPress={onButtonPress} />)}
+                {Children.map(children, ({ props }, index) => (
+                    <TabButton
+                        key={`tab-button.${index}`}
+                        title={props.tabName}
+                        active={props.tabName === activeTab}
+                        onPress={onButtonPress}
+                        isFirstChild={index === 0}
+                        isLastChild={index === children.length - 1}
+
+                    />
+                ))}
             </View>
             <View >
                 {tabElement}
-
             </View>
         </View>
     )
