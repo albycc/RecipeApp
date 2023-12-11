@@ -10,6 +10,7 @@ import IngredientsPanel from "../../../components/organisms/Pages/CreateRecipe/I
 import InstructionsPanel from "../../../components/organisms/Pages/CreateRecipe/InstructionsPanel";
 import Button from "../../../components/atoms/Input/Button";
 import Icon from "../../../components/atoms/Icon";
+import IconClock from "../../../assets/icons/clock.svg"
 
 
 function Recipe() {
@@ -28,6 +29,17 @@ function Recipe() {
         }
     }, [id])
 
+    const timeDisplay = (recipeMinutes: number) => {
+        let timeDisplayString: string = recipeMinutes.toString() + " min"
+        if (recipeMinutes > 60) {
+            const hours = Math.floor(recipeMinutes / 60)
+            const restOfMinutes = recipeMinutes - (hours * 60)
+            timeDisplayString = `${hours} h\n${restOfMinutes} min`
+        }
+        return timeDisplayString
+
+    }
+
     return (
         <View style={styles.content}>
             {recipe && <>
@@ -45,8 +57,11 @@ function Recipe() {
                                 size={20}
                             />
                         </View>
-                        <View style={{ flex: 1, flexDirection: "row", height: 40 }}>
-                            <Text style={{ fontSize: 15 }}>{recipe.time}</Text>
+                        <View style={{ flex: 1, flexDirection: "row", height: 100, padding: 10, marginHorizontal: 50 }}>
+                            <View style={{ flex: 1, position: "relative", justifyContent: "center", alignItems: "center", maxWidth: 60, maxHeight: 60 }}>
+                                <IconClock width={60} height={60} style={{ position: "absolute" }} />
+                                <Text style={{ fontSize: 15, textAlign: "center" }}>{timeDisplay(recipe.time)}</Text>
+                            </View>
                         </View>
                         <View style={{ flex: 5, }} >
                             <Tabs >

@@ -10,7 +10,7 @@ import { router } from "expo-router";
 
 interface IProps {
     visible?: boolean;
-    modalClosed: (visible: boolean) => void
+    onClose: () => void
 }
 
 function NewRecipeModal(props: IProps) {
@@ -35,11 +35,11 @@ function NewRecipeModal(props: IProps) {
 
     }
     return (
-        <ModalWindow visible={props.visible} modalClosed={props.modalClosed}>
-            <Text>Herro</Text>
+        <ModalWindow visible={props.visible} onClose={() => props.onClose}>
+            <Text>Recipe name</Text>
             <InputText onChange={(v) => setName(v)} />
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                <Button label="Cancel" onPress={() => props.modalClosed(false)} />
+                <Button label="Cancel" onPress={() => props.onClose()} />
                 <Button label="Create" onPress={() => createNewRecipeHandler()} disabled={name === ""} />
             </View>
 

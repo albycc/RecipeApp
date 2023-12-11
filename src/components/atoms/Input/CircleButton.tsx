@@ -32,7 +32,8 @@ function CircleButton({ label, diameter, colour, onPress }: IProps) {
 
 const styles = StyleSheet.create({
     roundbutton: {
-        borderRadius: 100
+        borderRadius: 100,
+        padding: 5
     },
     text: {
         textAlign: "center",

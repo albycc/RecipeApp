@@ -11,6 +11,7 @@ import IngredientsPanel from "../../../components/organisms/Pages/CreateRecipe/I
 import InstructionsPanel from "../../../components/organisms/Pages/CreateRecipe/InstructionsPanel";
 import { RecipeStore } from "../../../store/recipeStore";
 import Icon from "../../../components/atoms/Icon";
+import NumericInput from "../../../components/atoms/Input/NumericInput";
 
 function CreateRecipePage() {
     const { id } = useLocalSearchParams()
@@ -29,14 +30,11 @@ function CreateRecipePage() {
         }
     }, [id])
 
-    const editRecipe = () => {
+    const saveRecipe = () => {
         if (recipe) {
-
-            console.log("store recipe ", recipe)
-
             RecipeStore.putRecipe(recipe).then(data => {
                 if (data === "success") {
-                    setHasEdited(false)
+                    router.back()
                 }
             })
         }
@@ -66,13 +64,17 @@ function CreateRecipePage() {
                                     defaultText={recipe.name}
                                 />
                             </View>
-                            <View style={{ flex: 1, flexDirection: "row", height: 40 }}>
-                                <InputText
-                                    onChange={(v) =>
-                                        setRecipe({ ...recipe, time: +v })}
-                                    noBorder style={{ fontSize: 15 }}
-                                    placeHolder="Time"
-                                />
+                            <View style={{ flex: 1, flexDirection: "row", height: 100, padding: 10, marginHorizontal: 50 }}>
+                                <View >
+                                    <Text style={{ fontSize: 20 }}>Time</Text>
+                                    <NumericInput
+                                        minLimit={0}
+                                        onChange={(time) =>
+                                            setRecipe({ ...recipe, time })}
+                                        initValue={recipe.time}
+                                    />
+
+                                </View>
                             </View>
                             <View style={{ flex: 5, }} >
                                 <Tabs >
@@ -96,7 +98,6 @@ function CreateRecipePage() {
                             </View>
                         </ScrollView>
                     </View>
-
                 </>
             }
 
@@ -108,7 +109,7 @@ function CreateRecipePage() {
                     size={20}
                 />
                 <Button
-                    onPress={() => editRecipe()}
+                    onPress={() => saveRecipe()}
                     label="Save"
                     style={{ marginHorizontal: 10 }}
                     size={20}

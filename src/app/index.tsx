@@ -38,8 +38,8 @@ export default function App() {
     return (
         <HeaderMain>
             <View style={styles.container}>
-                {showNewRecipeModal && <NewRecipeModal visible={showNewRecipeModal} modalClosed={(visible) => setShowNewRecipeModal(visible)} />}
-                <ScrollView contentContainerStyle={{ justifyContent: "center", width, }} >
+                {showNewRecipeModal && <NewRecipeModal visible={showNewRecipeModal} onClose={() => setShowNewRecipeModal(false)} />}
+                <ScrollView contentContainerStyle={{ justifyContent: "center", width, alignItems: "center" }} >
                     <View style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}>
                         <CircleButton onPress={() => setShowNewRecipeModal(true)} label='NEW RECIPE' />
                     </View>

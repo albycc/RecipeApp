@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
         width: "100%",
         borderRadius: 20,
         padding: 10,
-        backgroundColor: ColourThemes.lightGrey
+        backgroundColor: ColourThemes.lightGrey,
+        zIndex: 100
     }
 })
 
